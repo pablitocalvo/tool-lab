@@ -1,0 +1,23 @@
+#!/bin/bash
+# questa riga serve per definire quale interprete usare 
+
+#todo: inserire controllo input parametri;
+
+#sono due variabili che sono poste ai valori dei parametri di linea
+GRUPPO=$1
+FILE=$2
+
+while read UTENTE  
+do
+	echo "****************************************"
+	echo cancello lo user : $UTENTE
+	echo "****************************************"
+	
+	# aggiunge l'utente
+	/usr/sbin/deluser --remove-home $UTENTE  
+	
+	
+done < $FILE
+
+
+delgroup --only-if-empty $GRUPPO

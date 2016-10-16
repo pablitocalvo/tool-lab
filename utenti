@@ -1,0 +1,42 @@
+#!/bin/bash
+# questa riga serve per definire quale interprete usare 
+
+#todo: inserire controllo input parametri;
+
+#sono due variabili che sono poste ai valori dei parametri di linea
+GRUPPO=$1
+FILE=$2
+
+#aggiunge il gruppo 
+/usr/sbin/addgroup --home /home/$GRUPPO --force-badname $GRUPPO
+
+#crea la directory per le home degli utenti
+/bin/mkdir /home/$GRUPPO;
+
+#cambia il gruppo alla directory creata
+#TODO: verificare ......... 
+/bin/chgrp $GRUPPO /home/$GRUPPO
+
+while read UTENTE  
+do
+	echo "****************************************"
+	echo aggiungo lo user : $UTENTE
+	echo "****************************************"
+	# aggiunge l'utente
+	#/usr/sbin/adduser --ingroup $GRUPPO --force-badname --home /home/$GRUPPO/$UTENTE --disabled-login --gecos $UTENTE  $UTENTE 
+	/usr/sbin/adduser --force-badname --home /home/$GRUPPO/$UTENTE --disabled-login --gecos $UTENTE  $UTENTE 
+	
+	# aggiunge l'utente al gruppo 
+	/usr/sbin/adduser $UTENTE $GRUPPO
+	
+	#imposta la password iniziale
+	echo "$UTENTE:koala" | chpasswd
+	
+	#forza il cambio della password al primo login
+	#TODO: non funziona via telnet cade la connessione
+	#       sistemare !!
+	#chage -d 0 $UTENTE
+	
+	
+	
+done < $FILE
