@@ -13,12 +13,14 @@ come root
  
  aggiungi la riga:
  
- %nis-users ALL= /usr/lib/yp/ypinit -m
+ %nis-users ALL=NOPASSWD: /usr/lib/yp/ypinit -m
  
  
  edit /etc/profile
  
  aggiungi:
+ 
  PATH=$PATH:/opt/tool-lab
+ 
  export PATH
   
