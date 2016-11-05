@@ -16,11 +16,10 @@ come root
  %nis-users ALL=NOPASSWD: /usr/lib/yp/ypinit -m
  
  
- edit /etc/profile
+ nano /etc/bash.bashrc
  
- aggiungi:
+ aggiungi in fondo:
  
  PATH=$PATH:/opt/tool-lab
- 
  export PATH
   
