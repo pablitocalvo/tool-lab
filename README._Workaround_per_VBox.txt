@@ -67,6 +67,10 @@ cambia password di root per "aggirare" il mancato funzionamento di drbl-client-r
 
 passwd rootc
 
+controlla:
+nano /etc/hosts
+
+
 =====================================================================================
 step 5 
 aggiornare il s/o
