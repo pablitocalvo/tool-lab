@@ -13,9 +13,12 @@ do
 	echo cancello lo user : $UTENTE
 	echo "****************************************"
 	
-	# aggiunge l'utente
-	/usr/sbin/deluser --remove-home $UTENTE  
-	
+	#rimouve l'utente paolo dal gruppo dell'utente
+	/usr/sbin/deluser paolo $UTENTE
+	# rimuove l'utente
+	/usr/sbin/deluser  --remove-home $UTENTE  
+	  
+	rm /home/2017.18/$GRUPPO/$UTENTE
 	
 done < $FILE
 

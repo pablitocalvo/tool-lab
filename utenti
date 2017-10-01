@@ -6,25 +6,26 @@
 #sono due variabili che sono poste ai valori dei parametri di linea
 GRUPPO=$1
 FILE=$2
+AS="2017.18"
 
-#aggiunge il gruppo 
+#crea  il gruppo 
+#TODO : inserire controllo
 /usr/sbin/addgroup --force-badname $GRUPPO
 
-#crea la directory per le home degli utenti
-#/bin/mkdir /home/$GRUPPO;
+#crea directory as/GRUPPO
 
-#cambia il gruppo alla directory creata
-#TODO: verificare ......... 
-#/bin/chgrp $GRUPPO /home/$GRUPPO
+mkdir -p /home/$AS/$GRUPPO
+
+
 
 while read UTENTE  
 do
 	echo "****************************************"
 	echo aggiungo lo user : $UTENTE
 	echo "****************************************"
+	
 	# aggiunge l'utente
-	#/usr/sbin/adduser --ingroup $GRUPPO --force-badname --home /home/$GRUPPO/$UTENTE --disabled-login --gecos $UTENTE  $UTENTE 
-	/usr/sbin/adduser --force-badname --home /home/$UTENTE --disabled-login --gecos $UTENTE  $UTENTE 
+	/usr/sbin/adduser --force-badname --home /home/$UTENTE  --disabled-login --gecos $UTENTE  $UTENTE 
 	
 	# aggiunge l'utente al gruppo 
 	/usr/sbin/adduser $UTENTE $GRUPPO
@@ -32,11 +33,13 @@ do
 	#imposta la password iniziale
 	echo "$UTENTE:koala" | chpasswd
 	
-	#forza il cambio della password al primo login
-	#TODO: non funziona via telnet cade la connessione
-	#       sistemare !!
-	#chage -d 0 $UTENTE
+	#rende privata la home directory 
+	chmod o-rwx /home/$UTENTE
 	
+	#aggiunge l'utente paolo al gruppo dell'utente 
+	/usr/sbin/adduser paolo $UTENTE
 	
+	#crea link in 
 	
+	ln -s /home/$UTENTE /home/$AS/$GRUPPO/$UTENTE
 done < $FILE
