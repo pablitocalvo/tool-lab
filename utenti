@@ -17,13 +17,23 @@ AS="2017.18"
 mkdir -p /home/$AS/$GRUPPO
 
 
+#elimina il file temporaneo dei non definiti
+rm $FILE.NON.DEFINITI.txt
 
 while read UTENTE  
 do
 	echo "****************************************"
 	echo aggiungo lo user : $UTENTE
 	echo "****************************************"
-	
+	if (id -u $UTENTE &> /dev/null) 
+	then 
+		echo "#########################################"
+		echo " utente $UTENTE NON DEFINITO "
+		echo " esiste già"
+		echo "#########################################"
+		echo $UTENTE >> $FILE.NON.DEFINITI.txt
+		continue
+	fi 
 	# aggiunge l'utente
 	/usr/sbin/adduser --force-badname --home /home/$UTENTE  --disabled-login --gecos $UTENTE  $UTENTE 
 	
@@ -39,7 +49,14 @@ do
 	#aggiunge l'utente paolo al gruppo dell'utente 
 	/usr/sbin/adduser paolo $UTENTE
 	
-	#crea link in 
+	#crea link in 	
 	
 	ln -s /home/$UTENTE /home/$AS/$GRUPPO/$UTENTE
 done < $FILE
+
+
+echo "#########################################"
+echo " i seguenti utenti non sono definiti"
+echo " esistono  già"
+echo "#########################################"
+cat $FILE.NON.DEFINITI.txt
