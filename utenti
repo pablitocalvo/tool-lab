@@ -6,7 +6,7 @@
 #sono due variabili che sono poste ai valori dei parametri di linea
 GRUPPO=$1
 FILE=$2
-AS="2017.18"
+AS="2018.19"
 
 #crea  il gruppo 
 #TODO : inserire controllo
@@ -41,7 +41,7 @@ do
 	/usr/sbin/adduser $UTENTE $GRUPPO
 	
 	#imposta la password iniziale
-	echo "$UTENTE:koala" | chpasswd
+	echo "$UTENTE:koala3b" | chpasswd
 	
 	#rende privata la home directory 
 	chmod o-rwx /home/$UTENTE
@@ -52,13 +52,14 @@ do
 	#crea link in 	
 	
 	ln -s /home/$UTENTE /home/$AS/$GRUPPO/$UTENTE
-done < $FILE
 
 	#aggiungo la cartella public_html
 	chmod a+rx /home/$UTENTE
 	mkdir /home/$UTENTE/public_html
 	chmod a+rx /home/$UTENTE/public_html
 	chown $UTENTE:$UTENTE /home/$UTENTE/public_html
+
+done < $FILE
 	
 
 
