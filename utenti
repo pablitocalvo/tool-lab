@@ -54,6 +54,13 @@ do
 	ln -s /home/$UTENTE /home/$AS/$GRUPPO/$UTENTE
 done < $FILE
 
+	#aggiungo la cartella public_html
+	chmod a+rx /home/$UTENTE
+	mkdir /home/$UTENTE/public_html
+	chmod a+rx /home/$UTENTE/public_html
+	chown $UTENTE:$UTENTE /home/$UTENTE/public_html
+	
+
 
 echo "#########################################"
 echo " i seguenti utenti non sono definiti"
